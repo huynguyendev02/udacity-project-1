@@ -1,0 +1,19 @@
+
+# Ignore Terraform .terraform directory
+.terraform/
+
+# Ignore packer generated files
+packer_cache/
+
+# Ignore all log files
+*.log
+
+# Ignore all .env files
+*.env
+
+# Ignore all .exe files
+*.exe
+
+# Ignore all .backup files
+*.backup
+

@@ -1,0 +1,37 @@
+{
+	"variables": {
+		"client_id": "{{env `ARM_CLIENT_ID`}}",
+		"client_secret": "{{env `ARM_CLIENT_SECRET`}}",
+		"subscription_id": "{{env `ARM_SUBSCRIPTION_ID`}}",
+		"resource_group": "{{env `ARM_RESOURCE_GROUP`}}"
+	},
+	"builders": [{
+        "type": "azure-arm",
+        "client_id": "{{user `client_id`}}",
+        "client_secret": "{{user `client_secret`}}",
+        "subscription_id": "{{user `subscription_id`}}",
+        "os_type": "Linux",
+        "image_publisher": "Canonical",
+        "image_offer": "UbuntuServer",
+        "image_sku": "18.04-LTS",
+		"build_resource_group_name": "{{user `resource_group`}}",
+        "managed_image_resource_group_name": "{{user `resource_group`}}",
+        "managed_image_name": "udacity-image",
+		"vm_size": "Standard_B2ms",
+		"azure_tags": {
+            "Project": "Udacity-1"
+        }
+    }], 
+	"provisioners": [{
+		"inline": [
+			"sudo apt-get update -y",
+			"sudo apt-get install -y apache2",
+			"sudo ufw allow 80",
+			"echo 'Hello, World!' | sudo tee /var/www/html/index.html",
+			"sudo systemctl restart apache2",
+			"sudo systemctl enable apache2"
+		],
+		"inline_shebang": "/bin/sh -x",
+		"type": "shell"
+	}]
+}
